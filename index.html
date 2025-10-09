@@ -9,18 +9,46 @@
       margin: 0;
       height: 100vh;
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
       font-family: Arial, sans-serif;
+      color: #000;
+      text-align: center;
     }
+
     h1 {
       font-size: 64px;
-      color: #000;
+      margin: 0;
+    }
+
+    p.bio {
+      font-size: 20px;
+      margin: 20px 0;
+      max-width: 600px;
+    }
+
+    .contact {
+      font-size: 18px;
+    }
+
+    .contact a {
+      color: #007BFF;
+      text-decoration: none;
+    }
+
+    .contact a:hover {
+      text-decoration: underline;
     }
   </style>
 </head>
 <body>
   <h1>Ihor Syvanenko</h1>
+  <p class="bio">Unity games developer with expirence and sas.</p>
+  
+  <div class="contact">
+    <p>📧 <a href="mailto:ihor@example.com">i.sivanenko2002@gmail.com</a></p>
+    
+  </div>
 </body>
 </html>
-
