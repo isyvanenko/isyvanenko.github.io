@@ -71,7 +71,7 @@
     }
 
     .project-content a {
-      color: #FF0000;
+      color: #007BFF;
       text-decoration: none;
       font-weight: bold;
     }
@@ -80,9 +80,30 @@
       text-decoration: underline;
     }
 
+    .webgl-section {
+      margin-top: 60px;
+    }
+
+    .webgl-section h2 {
+      font-size: 32px;
+      margin-bottom: 20px;
+    }
+
+    iframe.webgl-frame {
+      width: 960px;
+      height: 600px;
+      border: none;
+      max-width: 100%;
+    }
+
     @media (max-width: 700px) {
       .project-box {
         width: 90%;
+      }
+
+      iframe.webgl-frame {
+        width: 100%;
+        height: 480px;
       }
     }
   </style>
@@ -101,7 +122,7 @@
       <img src="poopieCOVER.PNG" alt="Poopie Game Screenshot">
       <div class="project-content">
         <p><strong>Poopie. Endless runner</strong></p>
-        <p>An Endless runner about a fly called Poopie who is trying to reach the sun. The game for made for the Barkeys GamesJam and recived quite possitive feedback from others.</p>
+        <p>An Endless runner about a fly called Poopie who is trying to reach the sun. The game was made for the Barkeys GamesJam and received quite positive feedback from others.</p>
         <p><a href="https://perisinch.itch.io/poopie" target="_blank">Play on Itch.io</a></p>
       </div>
     </div>
@@ -118,13 +139,19 @@
     
     <!-- Project 3 -->
     <div class="project-box">
-      <img src="GraveyardBloomCover.png" alt="Poopie Game Screenshot">
+      <img src="GraveyardBloomCover.png" alt="Graveyard Bloom Screenshot">
       <div class="project-content">
-        <p><strong>Graveyard Bloomr</strong></p>
-        <p>My first unreal game about taking care of the plants. Water them, and they will help you in the after life</p>
+        <p><strong>Graveyard Bloom</strong></p>
+        <p>My first Unreal game about taking care of plants. Water them, and they will help you in the afterlife.</p>
         <p><a href="https://perisinch.itch.io/graveyard-bloom" target="_blank">Download on Itch.io</a></p>
       </div>
     </div>
+  </div>
+
+  <!-- WebGL Game Section -->
+  <div class="webgl-section">
+    <h2>🕹️ Play "Poopie" in Browser</h2>
+    <iframe class="webgl-frame" src="poopie2/index.html"></iframe>
   </div>
 </body>
 </html>
