@@ -2,98 +2,135 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Ihor Syvanenko</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ihor Syvanenko | Game Developer Portfolio</title>
   <style>
+    /* 1. Global & Background Setup */
     body {
-      background-color: #1a1a2e; /* Dark background to contrast with the circles */
+      background-color: #000; /* Solid Black Background */
       margin: 0;
-      padding: 20px;
-      font-family: Arial, sans-serif;
-      color: #fff; /* Light text for contrast */
+      padding: 0;
+      font-family: 'Inter', sans-serif;
+      color: #fff;
       text-align: center;
-      overflow: hidden; /* Hide overflow from moving circles */
-      position: relative; /* For positioning the circles relative to body */
+      overflow-x: hidden; /* Prevent horizontal scroll */
+      position: relative;
     }
 
-    /* Styles for the animated circles */
+    /* Styles for the animated circles (Background Layer) */
     .circle-container {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      pointer-events: none; /* Allow interaction with content below */
-      z-index: -1; /* Place behind other content */
+      pointer-events: none;
+      z-index: 0; /* Background layer */
     }
 
     .circle {
       position: absolute;
       border-radius: 50%;
       opacity: 0.6;
-      animation: float 20s infinite ease-in-out;
+      filter: blur(2px); /* Soften the circles */
+      animation: float var(--duration) infinite ease-in-out;
     }
 
     @keyframes float {
       0% { transform: translateY(0) translateX(0) scale(1); }
-      25% { transform: translateY(-50px) translateX(20px) scale(1.1); }
-      50% { transform: translateY(0) translateX(0) scale(1); }
-      75% { transform: translateY(50px) translateX(-20px) scale(0.9); }
+      50% { transform: translateY(50px) translateX(-50px) scale(1.1); }
       100% { transform: translateY(0) translateX(0) scale(1); }
     }
 
+    /* 2. Header Panel (Name, Bio, Contact) */
+    .header-panel {
+      padding: 40px 20px;
+      margin-bottom: 40px;
+      background-color: rgba(10, 10, 20, 0.7); /* Semi-transparent dark background */
+      box-shadow: 0 4px 20px rgba(100, 0, 150, 0.4); /* Purple glow effect */
+      backdrop-filter: blur(5px);
+      border-radius: 12px;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+      position: relative;
+      z-index: 2; /* Ensure it is above the background */
+      border: 1px solid rgba(150, 50, 250, 0.2);
+    }
+
     h1 {
-      font-size: 64px;
+      font-size: clamp(3rem, 8vw, 64px);
       margin: 0;
-      color: #e0e0e0;
+      color: #F0F0F0;
     }
 
     p.bio {
-      font-size: 20px;
-      margin: 20px 0;
+      font-size: clamp(1rem, 2.5vw, 20px);
+      margin: 10px 0;
       max-width: 600px;
       margin-left: auto;
       margin-right: auto;
-      color: #cccccc;
+      color: #CCCCCC;
     }
 
     .contact {
       font-size: 18px;
-      margin-bottom: 40px;
+      margin-top: 20px;
     }
 
     .contact a {
-      color: #74b9ff; /* Brighter blue for links */
+      color: #bb90ff; /* Purple link color */
       text-decoration: none;
+      transition: color 0.3s;
     }
 
     .contact a:hover {
+      color: #ffe082; /* Yellow hover effect */
       text-decoration: underline;
     }
 
+    /* 3. Projects Section */
     .projects {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 40px;
-      position: relative; /* Ensure projects are above circles */
-      z-index: 1;
+      gap: 30px;
+      padding: 20px 0;
+      position: relative;
+      z-index: 1; /* Keep projects above the background */
     }
 
     .project-box {
-      width: 300px;
-      border: 1px solid #444; /* Darker border */
-      border-radius: 8px;
+      width: clamp(280px, 90%, 320px);
+      border-radius: 12px;
       overflow: hidden;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3); /* More prominent shadow */
+      box-shadow: 0 4px 15px rgba(0,0,0,0.5); /* Subtle default shadow */
       text-align: left;
-      background-color: #2a2a4a; /* Darker box background */
+      background-color: #1c1c3a; /* Darker box background for contrast */
       color: #e0e0e0;
+      border: 1px solid #333366;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    
+    .project-box:hover {
+        transform: translateY(-5px);
+    }
+    
+    /* Alternating Glow Effects on Hover */
+    .project-box.purple-glow:hover {
+        box-shadow: 0 10px 30px rgba(179, 136, 255, 0.4); /* Bright purple glow */
+    }
+
+    .project-box.yellow-glow:hover {
+        box-shadow: 0 10px 30px rgba(255, 230, 0, 0.4); /* Bright yellow glow */
     }
 
     .project-box img {
       width: 100%;
       height: auto;
       display: block;
+      aspect-ratio: 16/9; /* Maintain aspect ratio for covers */
+      object-fit: cover;
     }
 
     .project-content {
@@ -101,27 +138,62 @@
     }
 
     .project-content p {
-      margin: 10px 0;
+      margin: 5px 0;
     }
-
+    
+    /* Default button (Purple for Purple-Glow boxes) */
     .project-content a {
-      color: #74b9ff;
+      display: inline-block;
+      margin-top: 10px;
+      padding: 8px 15px;
+      border-radius: 6px;
+      background-color: #5d3587; /* Default Purple button */
+      color: white;
       text-decoration: none;
       font-weight: bold;
+      transition: background-color 0.3s;
     }
 
     .project-content a:hover {
-      text-decoration: underline;
+      background-color: #9c6ceb;
     }
 
-    .webgl-section {
-      margin-top: 60px;
+    /* Contrasting Yellow Button for Yellow-Glow boxes */
+    .project-box.yellow-glow .project-content a {
+        background-color: #ffe082; /* Bright Yellow button */
+        color: #4A148C; /* Dark Purple text for contrast */
+    }
+
+    .project-box.yellow-glow .project-content a:hover {
+        background-color: #f7b731; /* Slightly darker yellow on hover */
+    }
+
+
+    /* 4. WebGL Section & Panel */
+    .webgl-panel {
+      /* New container for the WebGL section */
+      background-color: rgba(10, 10, 20, 0.7); /* Semi-transparent dark background */
+      box-shadow: 0 4px 20px rgba(100, 0, 150, 0.4); 
+      backdrop-filter: blur(5px);
+      border-radius: 12px;
+      max-width: 1000px; /* Wider panel to contain the iframe */
+      margin: 60px auto; /* Centering and spacing */
+      padding: 20px;
       position: relative;
-      z-index: 1;
+      z-index: 2; /* Ensure it is above the background */
+      border: 1px solid rgba(150, 50, 250, 0.2);
+    }
+    
+    .webgl-section {
+        /* Reset wrapper styles to work inside the panel */
+        margin: 0;
+        padding: 0;
+        z-index: 1; 
     }
 
     .webgl-section h2 {
       font-size: 32px;
+      margin-top: 0;
       margin-bottom: 20px;
       color: #e0e0e0;
     }
@@ -130,32 +202,53 @@
       width: 960px;
       height: 600px;
       border: none;
-      max-width: 100%;
-      background-color: #333; /* Dark background for iframe if content is transparent */
+      max-width: 95%; 
+      background-color: #111;
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(255, 230, 0, 0.4); /* Subtle yellow glow for the game box */
+      /* --- Z-Index Fix for Clicks --- */
+      position: relative; 
+      z-index: 10; 
+      display: block; /* Allows centering with auto margins */
+      margin: 0 auto;
     }
 
     @media (max-width: 700px) {
+      .header-panel, .webgl-panel {
+        padding: 30px 15px;
+        margin-bottom: 20px;
+      }
+      .projects {
+        gap: 20px;
+      }
       .project-box {
         width: 90%;
       }
-
       iframe.webgl-frame {
-        width: 100%;
-        height: 480px;
+        height: 400px;
       }
     }
   </style>
 </head>
 <body>
-  <div class="circle-container"></div> <h1>Ihor Syvanenko</h1>
-  <p class="bio">Unity games developer with experience and sass.</p>
   
-  <div class="contact">
-    <p>📧 <a href="mailto:i.sivanenko2002@gmail.com">i.sivanenko2002@gmail.com</a></p>
-  </div>
+  <!-- Animated Background Container -->
+  <div class="circle-container"></div> 
 
+  <!-- 2. Header Panel -->
+  <section class="header-panel">
+    <h1>Ihor Syvanenko</h1>
+    <p class="bio">Unity games developer with experience and sass.</p>
+    
+    <div class="contact">
+      <p>📧 <a href="mailto:i.sivanenko2002@gmail.com">i.sivanenko2002@gmail.com</a></p>
+    </div>
+  </section>
+
+  <!-- 3. Projects Section -->
   <div class="projects">
-    <div class="project-box">
+    <!-- Project 1 (Purple Glow) -->
+    <div class="project-box purple-glow">
       <img src="poopieCOVER.PNG" alt="Poopie Game Screenshot">
       <div class="project-content">
         <p><strong>Poopie. Endless runner</strong></p>
@@ -164,7 +257,8 @@
       </div>
     </div>
 
-    <div class="project-box">
+    <!-- Project 2 (Yellow Glow - Contrasting Button) -->
+    <div class="project-box yellow-glow">
       <img src="FixxITCOVER.png" alt="FixxIT cover">
       <div class="project-content">
         <p><strong>FixxIT</strong></p>
@@ -173,7 +267,8 @@
       </div>
     </div>
     
-    <div class="project-box">
+    <!-- Project 3 (Purple Glow) -->
+    <div class="project-box purple-glow">
       <img src="GraveyardBloomCover.png" alt="Graveyard Bloom Screenshot">
       <div class="project-content">
         <p><strong>Graveyard Bloom</strong></p>
@@ -181,24 +276,48 @@
         <p><a href="https://perisinch.itch.io/graveyard-bloom" target="_blank">Download on Itch.io</a></p>
       </div>
     </div>
+
+    <!-- Project 4 (Placeholder, Yellow Glow - Contrasting Button) -->
+    <div class="project-box yellow-glow">
+      <img src="https://placehold.co/600x337/111/888?text=Next+Project+Coming+Soon" alt="Placeholder image for new project">
+      <div class="project-content">
+        <p><strong>Slay</strong></p>
+        <p>Slay the beat in this rhytm based game inspiered by old classics like DDR Eurostage. This project is not only game project but also a hardware project.</p>
+        <p><a href="#">Find out more.</a></p>
+      </div>
+    </div>
+    
+    <!-- Project 5 (New Placeholder, Purple Glow) -->
+    <div class="project-box purple-glow">
+      <img src="https://placehold.co/600x337/111/888?text=Another+Project+Spot" alt="Placeholder image for another new project">
+      <div class="project-content">
+        <p><strong>New Project Placeholder 2</strong></p>
+        <p>Future space for an upcoming game project. Check back soon!</p>
+        <p><a href="#">Coming Soon...</a></p>
+      </div>
+    </div>
   </div>
 
-  <div class="webgl-section">
-    <h2>🕹️ Play "Poopie" in Browser</h2>
-    <iframe class="webgl-frame" src="poopie2/index.html"></iframe>
-  </div>
+  <!-- 4. WebGL Game Panel -->
+  <section class="webgl-panel">
+    <div class="webgl-section">
+      <h2>🕹️ Play "Poopie" in Browser</h2>
+      <!-- The iframe has z-index: 10 and position: relative for fix -->
+      <iframe class="webgl-frame" src="poopie2/index.html"></iframe>
+    </div>
+  </section>
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const circleContainer = document.querySelector('.circle-container');
-      const numCircles = 30; // Number of circles
+      const numCircles = 40; // Total number of animated circles
 
       for (let i = 0; i < numCircles; i++) {
         const circle = document.createElement('div');
         circle.classList.add('circle');
 
         // Random size
-        const size = Math.random() * 100 + 20; // Size between 20px and 120px
+        const size = Math.random() * 60 + 20;
         circle.style.width = `${size}px`;
         circle.style.height = `${size}px`;
 
@@ -206,14 +325,23 @@
         circle.style.left = `${Math.random() * 100}%`;
         circle.style.top = `${Math.random() * 100}%`;
 
-        // Random colors from purple to yellow (using HSL for easier interpolation)
-        const hue = Math.random() * (60 - 270) + 270; // Hue range from purple (270) to yellow (60)
-        circle.style.backgroundColor = `hsl(${hue}, 70%, 60%)`;
+        // Random color: Alternates between Purple (270-300 hue) and Yellow (40-60 hue)
+        let hue;
+        if (Math.random() > 0.5) {
+            // Yellows
+            hue = Math.random() * (60 - 40) + 40;
+        } else {
+            // Purples/Blues
+            hue = Math.random() * (300 - 270) + 270;
+        }
+        
+        // High saturation and medium lightness for bright glow
+        circle.style.backgroundColor = `hsl(${hue}, 80%, 70%)`;
 
-        // Random animation delay and duration for variation
-        circle.style.animationDelay = `${Math.random() * -20}s`; // Negative delay to start animations at different points
-        circle.style.animationDuration = `${Math.random() * 15 + 15}s`; // Duration between 15s and 30s
-
+        // Random animation duration and delay
+        circle.style.setProperty('--duration', `${Math.random() * 10 + 20}s`); 
+        circle.style.animationDelay = `${Math.random() * -30}s`;
+        
         circleContainer.appendChild(circle);
       }
     });
