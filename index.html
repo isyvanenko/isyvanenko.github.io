@@ -5,17 +5,46 @@
   <title>Ihor Syvanenko</title>
   <style>
     body {
-      background-color: white;
+      background-color: #1a1a2e; /* Dark background to contrast with the circles */
       margin: 0;
       padding: 20px;
       font-family: Arial, sans-serif;
-      color: #000;
+      color: #fff; /* Light text for contrast */
       text-align: center;
+      overflow: hidden; /* Hide overflow from moving circles */
+      position: relative; /* For positioning the circles relative to body */
+    }
+
+    /* Styles for the animated circles */
+    .circle-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none; /* Allow interaction with content below */
+      z-index: -1; /* Place behind other content */
+    }
+
+    .circle {
+      position: absolute;
+      border-radius: 50%;
+      opacity: 0.6;
+      animation: float 20s infinite ease-in-out;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0) translateX(0) scale(1); }
+      25% { transform: translateY(-50px) translateX(20px) scale(1.1); }
+      50% { transform: translateY(0) translateX(0) scale(1); }
+      75% { transform: translateY(50px) translateX(-20px) scale(0.9); }
+      100% { transform: translateY(0) translateX(0) scale(1); }
     }
 
     h1 {
       font-size: 64px;
       margin: 0;
+      color: #e0e0e0;
     }
 
     p.bio {
@@ -24,6 +53,7 @@
       max-width: 600px;
       margin-left: auto;
       margin-right: auto;
+      color: #cccccc;
     }
 
     .contact {
@@ -32,7 +62,7 @@
     }
 
     .contact a {
-      color: #007BFF;
+      color: #74b9ff; /* Brighter blue for links */
       text-decoration: none;
     }
 
@@ -45,15 +75,19 @@
       flex-wrap: wrap;
       justify-content: center;
       gap: 40px;
+      position: relative; /* Ensure projects are above circles */
+      z-index: 1;
     }
 
     .project-box {
       width: 300px;
-      border: 1px solid #ccc;
+      border: 1px solid #444; /* Darker border */
       border-radius: 8px;
       overflow: hidden;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3); /* More prominent shadow */
       text-align: left;
+      background-color: #2a2a4a; /* Darker box background */
+      color: #e0e0e0;
     }
 
     .project-box img {
@@ -71,7 +105,7 @@
     }
 
     .project-content a {
-      color: #007BFF;
+      color: #74b9ff;
       text-decoration: none;
       font-weight: bold;
     }
@@ -82,11 +116,14 @@
 
     .webgl-section {
       margin-top: 60px;
+      position: relative;
+      z-index: 1;
     }
 
     .webgl-section h2 {
       font-size: 32px;
       margin-bottom: 20px;
+      color: #e0e0e0;
     }
 
     iframe.webgl-frame {
@@ -94,6 +131,7 @@
       height: 600px;
       border: none;
       max-width: 100%;
+      background-color: #333; /* Dark background for iframe if content is transparent */
     }
 
     @media (max-width: 700px) {
@@ -109,7 +147,7 @@
   </style>
 </head>
 <body>
-  <h1>Ihor Syvanenko</h1>
+  <div class="circle-container"></div> <h1>Ihor Syvanenko</h1>
   <p class="bio">Unity games developer with experience and sass.</p>
   
   <div class="contact">
@@ -117,7 +155,6 @@
   </div>
 
   <div class="projects">
-    <!-- Project 1 -->
     <div class="project-box">
       <img src="poopieCOVER.PNG" alt="Poopie Game Screenshot">
       <div class="project-content">
@@ -127,7 +164,6 @@
       </div>
     </div>
 
-    <!-- Project 2 -->
     <div class="project-box">
       <img src="FixxITCOVER.png" alt="FixxIT cover">
       <div class="project-content">
@@ -137,7 +173,6 @@
       </div>
     </div>
     
-    <!-- Project 3 -->
     <div class="project-box">
       <img src="GraveyardBloomCover.png" alt="Graveyard Bloom Screenshot">
       <div class="project-content">
@@ -148,10 +183,40 @@
     </div>
   </div>
 
-  <!-- WebGL Game Section -->
   <div class="webgl-section">
     <h2>🕹️ Play "Poopie" in Browser</h2>
     <iframe class="webgl-frame" src="poopie2/index.html"></iframe>
   </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const circleContainer = document.querySelector('.circle-container');
+      const numCircles = 30; // Number of circles
+
+      for (let i = 0; i < numCircles; i++) {
+        const circle = document.createElement('div');
+        circle.classList.add('circle');
+
+        // Random size
+        const size = Math.random() * 100 + 20; // Size between 20px and 120px
+        circle.style.width = `${size}px`;
+        circle.style.height = `${size}px`;
+
+        // Random position
+        circle.style.left = `${Math.random() * 100}%`;
+        circle.style.top = `${Math.random() * 100}%`;
+
+        // Random colors from purple to yellow (using HSL for easier interpolation)
+        const hue = Math.random() * (60 - 270) + 270; // Hue range from purple (270) to yellow (60)
+        circle.style.backgroundColor = `hsl(${hue}, 70%, 60%)`;
+
+        // Random animation delay and duration for variation
+        circle.style.animationDelay = `${Math.random() * -20}s`; // Negative delay to start animations at different points
+        circle.style.animationDuration = `${Math.random() * 15 + 15}s`; // Duration between 15s and 30s
+
+        circleContainer.appendChild(circle);
+      }
+    });
+  </script>
 </body>
 </html>
